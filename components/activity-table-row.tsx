@@ -52,7 +52,7 @@ export const ActivityTableRow: React.FC<ActivityTableRowProps> = ({
         col === "Date" || col === "Day" ? String(date) : activity?.[col];
 
       return (
-        <td key={col} className="border px-2 py-1">
+        <td key={col} className="px-2 py-1 border-t border-b border-gray-800">
           {CellComponent ? (
             <CellComponent
               isDaySummary={isDaySummary}

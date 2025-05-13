@@ -24,8 +24,8 @@ export const DistanceCell = ({
   ) {
     const sum = sumByKey(summaryActivities, "distance");
 
-    return <span className="font-bold">{sum} km</span>;
+    return <span className="font-bold">{sum.toFixed(1)} km</span>;
   }
 
-  return <span>{value != null ? `${value} km` : ""}</span>;
+  return <span>{value != null ? `${value.toFixed(1)} km` : ""}</span>;
 };

@@ -35,7 +35,11 @@ export const DateCell = ({
 
     return <span>{monthName}</span>;
   }
-  if (isWeekSummary) return <span>{value}</span>;
+  if (isWeekSummary) {
+    const [, weekNumber] = value.split("-");
+
+    return <span>{weekNumber.replace("W", "")}. týden</span>;
+  }
   const [, month, day] = value.split("-");
 
   if (isFullSummary) return "Celkem";
