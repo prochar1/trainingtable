@@ -35,13 +35,13 @@ export const ActivityTableRow: React.FC<ActivityTableRowProps> = ({
   <tr
     className={
       isFullSummary
-        ? "bg-black font-bold text-white"
+        ? "bg-red-800 font-bold"
         : isMonthSummary
-          ? "bg-blue-100 font-bold"
+          ? "bg-blue-800 font-bold"
           : isWeekSummary
-            ? "bg-green-100 font-bold"
+            ? "bg-green-800 font-bold"
             : isDaySummary
-              ? "bg-yellow-100 font-bold"
+              ? "bg-yellow-800 font-bold"
               : ""
     }
   >

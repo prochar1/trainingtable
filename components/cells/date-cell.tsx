@@ -1,3 +1,18 @@
+const monthsCz = [
+  "Leden",
+  "Únor",
+  "Březen",
+  "Duben",
+  "Květen",
+  "Červen",
+  "Červenec",
+  "Srpen",
+  "Září",
+  "Říjen",
+  "Listopad",
+  "Prosinec",
+];
+
 export const DateCell = ({
   value,
   isDaySummary,
@@ -12,10 +27,18 @@ export const DateCell = ({
   isFullSummary?: boolean;
 }) => {
   // Nezobrazuj datum pro souhrnné řádky
-  if (isDaySummary || isWeekSummary || isMonthSummary || isFullSummary)
-    return null;
   if (!value) return null;
+  if (isDaySummary) return null;
+  if (isMonthSummary) {
+    const [, month] = value.split("-");
+    const monthName = monthsCz[Number(month) - 1] || month;
+
+    return <span>{monthName}</span>;
+  }
+  if (isWeekSummary) return <span>{value}</span>;
   const [, month, day] = value.split("-");
+
+  if (isFullSummary) return "Celkem";
 
   return (
     <span>

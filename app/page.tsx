@@ -121,7 +121,7 @@ const activities: Activity[] = [
     kiloJoules: 780,
   },
   {
-    date: "2025-05-31",
+    date: "2025-06-01",
     distance: 19.5,
     movingTime: "1:40",
     elevationGain: 320,
