@@ -1,7 +1,19 @@
 import React from "react";
 
-import { sumMovingTime } from "../../utils/activity-aggregates";
+import { sumByKey } from "../../utils/activity-aggregates";
 import { Activity } from "../../types/activity";
+
+// Pomocná funkce pro převod sekund na H:m:s
+function formatSecondsToHMS(seconds?: number): string {
+  if (seconds == null || isNaN(seconds)) return "";
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+
+  return [h, m, s]
+    .map((v, i) => (i === 0 ? v : String(v).padStart(2, "0")))
+    .join(":");
+}
 
 export const MovingTimeCell = ({
   value,
@@ -22,10 +34,10 @@ export const MovingTimeCell = ({
     (isDaySummary || isWeekSummary || isMonthSummary || isFullSummary) &&
     summaryActivities
   ) {
-    const sum = sumMovingTime(summaryActivities);
+    const sum = sumByKey(summaryActivities, "movingTime");
 
-    return <span className="font-bold">{sum}</span>;
+    return <span className="font-bold">{formatSecondsToHMS(sum)}</span>;
   }
 
-  return <span>{value != null ? `${value}` : ""}</span>;
+  return <span>{value != null ? formatSecondsToHMS(value) : ""}</span>;
 };

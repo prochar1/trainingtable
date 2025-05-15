@@ -1,3 +1,5 @@
+import { CalendarDate } from "@internationalized/date";
+
 import { Activity } from "../types/activity";
 
 // Součet číselné hodnoty pro daný klíč
@@ -12,16 +14,18 @@ export function avgByKey(activities: Activity[], key: keyof Activity): number {
   return sumByKey(activities, key) / activities.length;
 }
 
-// Součet časů ve formátu "h:mm"
-export function sumMovingTime(activities: Activity[]): string {
-  const totalMinutes = activities.reduce((acc, a) => {
-    if (!a.movingTime) return acc;
-    const [h, m] = a.movingTime.split(":").map(Number);
+export function filterActivitiesByRange(
+  activities: Activity[],
+  range: { start?: CalendarDate; end?: CalendarDate },
+): Activity[] {
+  return activities.filter((a) => {
+    const d = new Date(a.date);
+    const start = range.start?.toDate?.("UTC") ?? null;
+    const end = range.end?.toDate?.("UTC") ?? null;
 
-    return acc + h * 60 + m;
-  }, 0);
-  const h = Math.floor(totalMinutes / 60);
-  const m = totalMinutes % 60;
+    if (start && d < start) return false;
+    if (end && d > end) return false;
 
-  return `${h}:${String(m).padStart(2, "0")}`;
+    return true;
+  });
 }

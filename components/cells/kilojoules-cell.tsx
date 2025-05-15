@@ -22,8 +22,8 @@ export const KiloJoulesCell = ({
   ) {
     const sum = sumByKey(summaryActivities, "kiloJoules");
 
-    return <span className="font-bold">{sum} kJ</span>;
+    return <span className="font-bold">{sum.toFixed(0)} kJ</span>;
   }
 
-  return <span>{value != null ? `${value} kJ` : ""}</span>;
+  return <span>{value != null ? `${value.toFixed(0)} kJ` : ""}</span>;
 };

@@ -22,10 +22,16 @@ export const DistanceCell = ({
     (isDaySummary || isWeekSummary || isMonthSummary || isFullSummary) &&
     summaryActivities
   ) {
-    const sum = sumByKey(summaryActivities, "distance");
+    const sum = sumByKey(summaryActivities, "distance") / 1000; // Convert to km
 
-    return <span className="font-bold">{sum.toFixed(1)} km</span>;
+    return sum ? (
+      <span className="font-bold">{sum.toFixed(1)} km</span>
+    ) : (
+      <span />
+    );
   }
 
-  return <span>{value != null ? `${value.toFixed(1)} km` : ""}</span>;
+  value = value != null ? value / 1000 : undefined; // Convert to km
+
+  return value ? <span>{value.toFixed(1)} km</span> : <span></span>;
 };
