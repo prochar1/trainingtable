@@ -29,3 +29,27 @@ export function filterActivitiesByRange(
     return true;
   });
 }
+
+export async function fetchAllActivitiesInRange(
+  after: number,
+  before: number,
+  perPage = 100,
+): Promise<Activity[]> {
+  let all: Activity[] = [];
+  let page = 1;
+
+  while (true) {
+    const res = await fetch(
+      `/api/strava-activities?after=${after}&before=${before}&per_page=${perPage}&page=${page}`,
+    );
+
+    if (!res.ok) break;
+    const data: Activity[] = await res.json();
+
+    if (!data.length) break;
+    all = all.concat(data);
+    page++;
+  }
+
+  return all;
+}

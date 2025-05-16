@@ -36,28 +36,6 @@ export function getAllDaysInRange(
   return days;
 }
 
-// export function getAllDaysRange(activities: Activity[]): string[] {
-//   if (!activities.length) return [];
-//   const sorted = [...activities].sort((a, b) => a.date.localeCompare(b.date));
-//   const start = sorted[0].date;
-//   const end = sorted[sorted.length - 1].date;
-
-//   const days: string[] = [];
-//   let current = new Date(start);
-//   const last = new Date(end);
-
-//   while (current <= last) {
-//     const y = current.getFullYear();
-//     const m = String(current.getMonth() + 1).padStart(2, "0");
-//     const d = String(current.getDate()).padStart(2, "0");
-
-//     days.push(`${y}-${m}-${d}`);
-//     current.setDate(current.getDate() + 1);
-//   }
-
-//   return days;
-// }
-
 export const getYearMonth = (date: string) => date.slice(0, 7);
 
 export function getLastDaysInMonths(days: string[]): Record<string, string> {
@@ -167,4 +145,34 @@ export function getISOWeekNumber(dateStr: string): number {
         7,
     )
   );
+}
+
+export function calendarDateToUnix(date: CalendarDate) {
+  return Math.floor(
+    new Date(date.year, date.month - 1, date.day).getTime() / 1000,
+  );
+}
+
+export function getCalendarDateDiffInDays(
+  start: CalendarDate,
+  end: CalendarDate,
+): number {
+  const startDate = new Date(start.year, start.month - 1, start.day);
+  const endDate = new Date(end.year, end.month - 1, end.day);
+
+  return (
+    Math.abs(
+      Math.floor(
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+      ),
+    ) + 1 // včetně obou dnů
+  );
+}
+
+export function isRangeWithinDays(
+  start: CalendarDate,
+  end: CalendarDate,
+  maxDays: number,
+): boolean {
+  return getCalendarDateDiffInDays(start, end) <= maxDays;
 }

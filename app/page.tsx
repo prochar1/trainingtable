@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { I18nProvider } from "@react-aria/i18n";
 import { CalendarDate } from "@internationalized/date";
 import { DateRangePicker } from "@heroui/date-picker";
+// import { differenceInCalendarDays } from "date-fns"; // nebo napiš vlastní funkci
 
 import { ActivityTable } from "@/components/activity-table";
 import { StravaLoginButton } from "@/components/login-button";
 import { Activity } from "@/types/activity";
+import { calendarDateToUnix, isRangeWithinDays } from "@/utils/date";
+import { fetchAllActivitiesInRange } from "@/utils/activity-aggregates";
 
 export default function Home(): JSX.Element {
   const [activities, setActivities] = useState<Activity[] | null>(null);
@@ -27,12 +30,12 @@ export default function Home(): JSX.Element {
   });
 
   useEffect(() => {
-    fetch("/api/strava-activities")
-      .then((res) => {
-        if (res.status === 401) return [];
+    setLoading(true);
+    const after = calendarDateToUnix(range.start);
+    // Přičti jeden den k end, aby byl rozsah včetně posledního dne
+    const before = calendarDateToUnix(range.end) + 24 * 3600;
 
-        return res.json();
-      })
+    fetchAllActivitiesInRange(after, before)
       .then((data) => {
         setActivities(data);
         setLoading(false);
@@ -41,7 +44,7 @@ export default function Home(): JSX.Element {
         setActivities([]);
         setLoading(false);
       });
-  }, []);
+  }, [range]);
 
   return (
     <section className="flex flex-col gap-4">
@@ -57,6 +60,11 @@ export default function Home(): JSX.Element {
           visibleMonths={2}
           onChange={(value) => {
             if (value) {
+              if (!isRangeWithinDays(value.start, value.end, 366)) {
+                alert("Lze vybrat maximálně 366 dní.");
+
+                return;
+              }
               setRange(value);
             }
           }}

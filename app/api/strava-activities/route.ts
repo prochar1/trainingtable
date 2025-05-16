@@ -31,5 +31,7 @@ export async function GET(request: Request) {
 
   const activities = await activitiesRes.json();
 
+  console.log(activities);
+
   return Response.json(mapStravaActivities(activities));
 }

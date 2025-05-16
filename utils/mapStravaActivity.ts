@@ -8,7 +8,19 @@ export function mapStravaActivity(strava: any): Activity {
     elevationGain: strava.total_elevation_gain,
     kiloJoules: strava.kilojoules,
     note: strava.name || strava.description || "",
-    // přidej další mapování podle potřeby
+    type: strava.type,
+    sportType: strava.sport_type,
+    averageSpeed: strava.average_speed,
+    maxSpeed: strava.max_speed,
+    averageCadence: strava.average_cadence,
+    averageTemp: strava.average_temp,
+    averageWatts: strava.average_watts,
+    averageHeartrate: strava.average_heartrate,
+    maxHeartrate: strava.max_heartrate,
+    prCount: strava.pr_count,
+    kudosCount: strava.kudos_count,
+    stravaId: strava.id,
+    // přidej další podle potřeby
   };
 }
 

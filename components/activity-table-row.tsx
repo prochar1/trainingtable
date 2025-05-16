@@ -48,6 +48,7 @@ export const ActivityTableRow: React.FC<ActivityTableRowProps> = ({
     {columns.map((col) => {
       const CellComponent =
         cellComponentMap[col as keyof typeof cellComponentMap];
+      // console.log("col", col, "activity", activity);
       let value: any =
         col === "Date" || col === "Day" ? String(date) : activity?.[col];
 
@@ -55,6 +56,7 @@ export const ActivityTableRow: React.FC<ActivityTableRowProps> = ({
         <td key={col} className="px-2 py-1 border-t border-b border-gray-800">
           {CellComponent ? (
             <CellComponent
+              activity={activity as Activity}
               isDaySummary={isDaySummary}
               isFullSummary={isFullSummary}
               isMonthSummary={isMonthSummary}

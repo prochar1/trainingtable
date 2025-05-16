@@ -4,6 +4,9 @@ import { DistanceCell } from "../components/cells/distance-cell";
 import { MovingTimeCell } from "../components/cells/moving-time-cell";
 import { ElevationGainCell } from "../components/cells/elevation-gain-cell";
 import { KiloJoulesCell } from "../components/cells/kilojoules-cell";
+import { StravaIdCell } from "../components/cells/stravaid-cell";
+
+import { AverageSpeedCell } from "@/components/cells/averagespeed-cell";
 
 export const activityTableColumns = [
   "Day",
@@ -12,6 +15,19 @@ export const activityTableColumns = [
   "movingTime",
   "elevationGain",
   "kiloJoules",
+  "type",
+  "sportType",
+  "averageSpeed",
+  "maxSpeed",
+  "averageCadence",
+  "averageTemp",
+  "averageWatts",
+  "averageHeartrate",
+  "maxHeartrate",
+  "prCount",
+  "kudosCount",
+  "stravaId",
+  // další sloupce...
 ] as const;
 
 export const activityTableCellComponentMap = {
@@ -21,4 +37,6 @@ export const activityTableCellComponentMap = {
   movingTime: MovingTimeCell,
   elevationGain: ElevationGainCell,
   kiloJoules: KiloJoulesCell,
+  stravaId: StravaIdCell,
+  averageSpeed: AverageSpeedCell,
 };
